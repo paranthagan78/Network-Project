@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features</title>
+    <style>
+        body {
+            font-family:'Roboto', sans-serif;
+            background-image: url('{{ url_for("static", filename="sky.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a{
+            padding-right: 20px;
+        }
+
+        .container {
+            width: 35%;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px; 
+            box-shadow: 10px 10px 10px 0 rgba(0, 0, 0, 0.8); 
+            text-align: center;
+            margin: auto;
+            margin-top: 100px;
+            text-align: center;
+            margin-bottom: 15px;
+            border-radius: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+
+        .nav-bar img {
+            height: 100%;
+            max-width: 100%;
+        }
+
+        .nav-bar a {
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .other-links a:hover {
+            color: #bbb;
+        }
+        
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 1.1;
+        }
+
+        .feature-text {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 1px;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar" style="background-color: rgba(0, 0, 0, 0.5);">
+        <img src="{{ url_for('static', filename='logo1.png') }}">
+        <div>
+            <a href='/login' style="margin-right: 10px;">Logout</a>
+            <a href='#' style="margin-right: 10px;">About Us</a>
+        </div>
+    </div>
+    <div class="container" onclick="window.location.href='/bandwidth_usage'">
+        <div class="feature-text">Bandwidth Usage</div>
+    </div>
+    <div class="container" onclick="window.location.href='/network_activity'">
+        <div class="feature-text">Network Activity</div>
+    </div>
+    <div class="container" onclick="window.location.href='/wifi_twin'">
+        <div class="feature-text">Wifi Twin</div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2023 Sri Sivasubramaniya nadar college of engineering. All Rights Reserved</p>
+    </div>
+</body>
+</html>

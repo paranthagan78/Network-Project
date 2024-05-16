@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bandwidth Usage</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        body {
+            font-family: "Roboto", sans-serif;
+            background-image: url('{{ url_for("static", filename="sky.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure body takes at least the height of the viewport */
+            overflow: hidden;
+        }
+
+        a {
+            padding-right: 20px;
+            text-size-adjust: 5px;
+        }
+
+        form{
+            margin: 180px 180px 180px 580px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container1 {
+            width: 50%; /* Set the width */
+            height: 50%; /* Set the height */
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px; 
+            text-align: center;
+            border: 1px solid black;
+            border-radius: 20px;
+        }
+
+        .container1 ul {
+            list-style-type: none; /* Remove bullet points */
+        }
+
+        .nav-bar {
+            position: fixed; /* Fixed position to keep it at the top */
+            top: 0; /* Position at the top */
+            left: 0; /* Align to the left */
+            width: 100%;
+            height: 60px; /* Adjust height */
+            background-color: rgba(0, 0, 0, 0.5); /* Transparent background */
+            display: flex;
+            justify-content: space-between; /* Place content on either side */
+            align-items: center;
+            padding: 0 20px; /* Add padding for better spacing */
+            z-index: 1000; /* Ensure it appears above other elements */ 
+        }
+        
+        .nav-bar img {
+            height: 100%;
+            max-width: 100%; /* Ensure the image doesn't overflow */
+        }
+
+        .nav-bar a {
+            color: white;
+            font-size: 20px; /* Adjust font size */
+            text-decoration: none;
+            margin: 0 10px; /* Add spacing between links */
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 5px;
+            text-align: center;
+            border-top-right-radius: 8px;
+            border-top-left-radius: 8px;
+        }
+        
+        .feature-text {
+            color: white; /* Text color */
+            font-size: 24px; /* Adjust font size */
+            font-weight: bold; /* Bold text */
+            position: relative; /* Position for z-index */
+            z-index: 1; /* Above pseudo-element */
+        }
+        
+        .footer {
+            background-color: rgba(0, 0, 0, 0.5); /* Transparent background */
+            color: white;
+            padding: 1px;
+            text-align: center;
+            width: 100%;
+            position: fixed; /* Fixed position to keep it at the bottom */
+            bottom: 0; /* Position at the bottom */
+            left: 0; /* Align to the left */
+            z-index: 1000; /* Ensure it appears above other elements */
+        }
+    </style>
+
+    <script>
+        function updatewifitwin() {
+            fetch('/get_wifi_twin') // Fetch data from Flask endpoint
+                .then(response => response.json())
+                .then(data => {
+                    // Update the sent and received data in the HTML
+                    document.getElementById('sent_value').innerText = data.wifi;
+                })
+                .catch(error => console.error('Error fetching bandwidth data:', error));
+        }
+        // Update bandwidth data every second
+        setInterval(updateBandwidth, 1000);
+    </script>
+</head>
+<body>
+    <div class="nav-bar">
+        <img src="{{ url_for('static', filename='logo1.png') }}">
+        <div>
+            <a href="/logout">Logout</a>
+            <a href="/feature">Feature</a>
+            <a href='#'>About Us</a>
+            <a href='#'>Help</a>
+        </div>
+    </div>
+    <form method="POST" action="{{ url_for('wifi_twin') }}">
+        <div class="container1">
+            <div class="feature-text">
+                <p>Available Networks</p>
+                <ul>
+                    {% for network in available_networks %}
+                    <li>{{ network }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </form>
+
+    <div class="footer">
+        <p>&copy; 2023 Sri Sivasubramaniya nadar collegue of engineering. All Rights Reserved</p>
+    </div>
+</body></html>

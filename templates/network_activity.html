@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Activity</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        body {
+            font-family: "Roboto", sans-serif;
+            background-image: url('{{ url_for("static", filename="sky.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-y: hidden;
+        }
+
+        a {
+            padding-right: 20px;
+        }
+
+        form{
+            margin:100px 10px 60px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+        
+        .container3 {
+            width: 65%;
+            margin-left: 30%;
+            margin-bottom: 20px;
+            position: relative;
+            top: -530px;
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+        
+        .nav-bar img {
+            height: 100%;
+            max-width: 100%;
+        }
+
+        .nav-bar a {
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(244, 240, 240, 0.5);
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{{ url_for("static", filename="logo1.png") }}');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            opacity: 1.1;
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 5px;
+            text-align: center;
+            border-top-right-radius: 8px;
+            border-top-left-radius: 8px;
+        }
+        
+        .feature-text {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 1px;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <img src="{{ url_for('static', filename='logo1.png') }}">
+        <div>
+            <a href="/logout">Logout</a>
+            <a href="/feature">Feature</a>
+            <a href='#'>About Us</a>
+            <a href='#'>Help</a>
+        </div>
+    </div>
+
+    <div class="container3">
+        <canvas id="networkChart"></canvas>
+    </div>
+
+    <script>
+        fetch('/network_activity')
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('networkChart').getContext('2d');
+                const networkChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Packet Size',
+                            data: data.sizes,
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching network activity data:', error));
+    </script>
+
+    <div class="footer">
+        <p>&copy; 2023 Sri Sivasubramaniya nadar college of engineering. All Rights Reserved</p>
+    </div>
+</body>
+</html>
