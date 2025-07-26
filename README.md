@@ -95,8 +95,6 @@ If you'd like to improve this project, feel free to **fork** the repository, mak
 
 ## 👤 Author
 
-**Paranthagan S**  
-📧 [paranthagan2210656@ssn.edu.in](mailto:paranthagan2210656@ssn.edu.in)  
-🔗 [LinkedIn](https://www.linkedin.com/in/paranthagan-s-6477b7257)
+**Paranthagan S**
 
 ---
